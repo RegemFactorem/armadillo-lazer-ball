@@ -22,7 +22,7 @@ public class Pong extends Game {
     ballDef.setSize(100,100);
     ballDef.setX(40);
     ballDef.setY(40);
-    ballDef.setColor(Color.red);
+    ballDef.setColor(Color.white);
     add(ballDef);
 
     ball = new Ball();    //Ball characteristics
