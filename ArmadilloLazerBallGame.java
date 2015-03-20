@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Pong extends Game {
+public class ArmadilloLazerBallGame extends Game {
   private Ball ballL;
   private Ball bulletL;
   private Ball ballDef;
