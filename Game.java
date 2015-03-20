@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -17,14 +16,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
-
 public abstract class Game extends JFrame {
  private boolean _isSetup = false;
  private boolean _initialized = false;
  private ArrayList _ObjectList = new ArrayList();
  private Timer _t;
 
-private boolean shoot = false;
+ private boolean shoot = false;
  private boolean ballUp = false;
  private boolean ballDown = false;
  private boolean ballLeft = false;
