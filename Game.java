@@ -5,7 +5,7 @@
  */
 
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
-import javax.swing.JLabel;
 
 
 public abstract class Game extends JFrame {
@@ -31,7 +30,7 @@ public abstract class Game extends JFrame {
  private ArrayList _ObjectList = new ArrayList();
  private Timer _t;
  
-
+private boolean shoot = false;
  private boolean ballUp = false;
  private boolean ballDown = false;
  private boolean ballLeft = false;
@@ -40,15 +39,24 @@ public abstract class Game extends JFrame {
  private boolean defDown = false;
  private boolean defLeft = false;
  private boolean defRight = false;
+ private boolean changeColor = false;
  
+ public boolean UpKeyPressed(){
+   return changeColor;
+ }
   public boolean IKeyPressed() {
   return defUp;
  }
- 
+  public boolean OneKeyPressed(){
+    return shoot;
+  }
+  public void BulletHit(){
+    shoot=false;
+  }
  public boolean KKeyPressed() {
   return defDown;
  }
- 
+
  public boolean JKeyPressed() {
   return defLeft;
  }
@@ -158,18 +166,12 @@ public abstract class Game extends JFrame {
   getContentPane().setBackground(Color.black);
   getContentPane().setLayout(null);
         JMenuBar menuBar = new JMenuBar();
-        JMenu menuFile = new JMenu("Hacks");
-        JMenuItem menuFileExit = new JMenuItem("No Clip");
+        JMenu menuFile = new JMenu("File");
+        JMenuItem menuFileExit = new JMenuItem("Leave this B");
         menuBar.add(menuFile);
         menuFile.add(menuFileExit);
         setJMenuBar(menuBar);
-        setTitle("Armidle Laser Ball");
-        JLabel score = new JLabel("Score: ");
-        score.setText("Score: ");
-        score.setLocation(500,40);
-        score.setVisible(true);
-        score.setForeground(Color.red);
-        getContentPane().add(score);
+        setTitle("Pong");
                
         // Add window listener.
         addWindowListener (
@@ -210,7 +212,9 @@ public abstract class Game extends JFrame {
      case 'K' : defDown = true; break;
      case 'J' : defLeft = true; break;
      case 'L' : defRight = true; break;
-
+     case '1' : shoot = true; break;
+      case KeyEvent.VK_UP : changeColor = true; break;
+    
   }
     
    }
@@ -226,11 +230,13 @@ public abstract class Game extends JFrame {
      case 'K' : defDown = false; break;
      case 'J' : defLeft = false; break;
      case 'L' : defRight = false; break;
+          case KeyEvent.VK_UP : changeColor = false; break;
   
     }
    }
+   
        }); 
-}
+   }
  
  /**
   * Starts updates to the game
@@ -263,12 +269,14 @@ public abstract class Game extends JFrame {
   d.setVisible(true);
  }
  
+
  /**
   * Displays a dialog that says "Player 2 Wins!"
   *
   */
  public void p2Wins() {
-  _WinDialog d = new _WinDialog(this, "Player 2 Wins!");
+  _WinDialog d = new _WinDialog(this, "You died :(");
+  d.setSize(300,100);
   d.setVisible(true); 
  }
  

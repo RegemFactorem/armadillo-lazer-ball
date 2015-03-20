@@ -1,3 +1,5 @@
+
+
 /*
  * This code is protected under the Gnu General Public License (Copyleft), 2005 by
  * IBM and the Computer Science Teachers of America organization. It may be freely
@@ -5,9 +7,7 @@
  */
 
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 import javax.swing.JComponent;
 
