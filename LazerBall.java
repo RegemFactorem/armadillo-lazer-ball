@@ -4,8 +4,8 @@ public class LazerBall extends Game {
   private Ball ballL;
   private Ball bulletL;
   private Ball ballDef;
-  private Paddle paddleL;
-  private Paddle paddleR;
+  private Paddle wallL;
+  private Paddle wallR;
   private Paddle ceiling;
   private Paddle floor;
   private boolean bulletInMotion = false;
@@ -31,17 +31,17 @@ public class LazerBall extends Game {
     bulletL.setY(ballL.getY());
 
 
-    paddleL = new Paddle();    //Reft bounds
-    paddleL.setSize(5,600);
-    paddleL.setX(0);
-    paddleL.setY(0);
-    add(paddleL);
+    wallL = new Paddle();    //Reft bounds
+    wallL.setSize(5,600);
+    wallL.setX(0);
+    wallL.setY(0);
+    add(wallL);
 
-    paddleR = new Paddle();      //Right bounds
-    paddleR.setSize(5,600);
-    paddleR.setX(getFieldWidth()-5);
-    paddleR.setY(0);
-    add(paddleR);
+    wallR = new Paddle();      //Right bounds
+    wallR.setSize(5,600);
+    wallR.setX(getFieldWidth()-5);
+    wallR.setY(0);
+    add(wallR);
 
     ceiling = new Paddle();   //Lower bounds
     ceiling.setSize(600,5);
@@ -111,11 +111,11 @@ public class LazerBall extends Game {
     }
 
 
-    if(ballL.collides(paddleL)){      //Sets boundiares for ball
+    if(ballL.collides(wallL)){      //Sets boundiares for ball
       ballL.setX(5);
     }
-    if(ballL.collides(paddleR)){
-      ballL.setX(paddleR.getX() -10);
+    if(ballL.collides(wallR)){
+      ballL.setX(wallR.getX() -10);
     }
     if(ballL.collides(ceiling)){
       ballL.setY(5);
@@ -124,7 +124,7 @@ public class LazerBall extends Game {
       ballL.setY(floor.getY() - 10);
     }
 
-    if(bulletL.collides(paddleL)){
+    if(bulletL.collides(wallL)){
       bulletL.setColor(Color.black);   //Sets boundiares for bullet
       bulletL.setX(ballL.getX());
       bulletL.setY(ballL.getY());
@@ -133,7 +133,7 @@ public class LazerBall extends Game {
       bulletInMotion = false;
       BulletHit();
     }
-    if(bulletL.collides(paddleR)){
+    if(bulletL.collides(wallR)){
       bulletL.setColor(Color.black);
       bulletL.setX(ballL.getX());
       bulletL.setY(ballL.getY());
@@ -160,11 +160,24 @@ public class LazerBall extends Game {
       bulletInMotion = false;
       BulletHit();
     }
+      if(bulletL.collides(ballDef) && bulletInMotion == true)
+      {
+          ballDef.setSize(ballDef.getWidth() - 10, ballDef.getHeight() - 10);
+          System.out.println("Bullet hit 1def");
+          bulletL.setX(ballL.getX());
+          bulletL.setY(ballL.getY());
+          bulletL.setXVelocity(0);
+          bulletL.setYVelocity(0);
+          bulletInMotion = false;
+          BulletHit();
+          //ballDef.doDamage();
+          bulletL.setColor(Color.black);
+      }
 
-    if(ballDef.collides(paddleL))          //Sets boundiares for Defender
+    if(ballDef.collides(wallL))          //Sets boundiares for Defender
       ballDef.setX(5);
-    if(ballDef.collides(paddleR))
-      ballDef.setX(paddleR.getX() - ballDef.getWidth());
+    if(ballDef.collides(wallR))
+      ballDef.setX(wallR.getX() - ballDef.getWidth());
     if(ballDef.collides(ceiling))
       ballDef.setY(5);
     if(ballDef.collides(floor))
@@ -190,19 +203,7 @@ public class LazerBall extends Game {
     }
 
 
-    if(bulletL.collides(ballDef) && bulletInMotion == true)
-    {
-      ballDef.setSize(ballDef.getWidth() - 10, ballDef.getHeight() - 10);
-      System.out.println("Bullet hit 1def");
-      bulletL.setX(ballL.getX());
-      bulletL.setY(ballL.getY());
-      bulletL.setXVelocity(0);
-      bulletL.setYVelocity(0);
-      bulletInMotion = false;
-      BulletHit();
-      //ballDef.doDamage();
-      bulletL.setColor(Color.black);
-    }
+
     if(ballDef.getWidth() < 10)
     {
       stopGame();
