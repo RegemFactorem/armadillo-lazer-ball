@@ -22,7 +22,10 @@ public abstract class Game extends JFrame {
  private ArrayList _ObjectList = new ArrayList();
  private Timer _t;
 
- private boolean shoot = false;
+ private boolean shootLeft = false;
+    private boolean shootRight = false;
+    private boolean shootUp = false;
+    private boolean shootDown = false;
  private boolean ballUp = false;
  private boolean ballDown = false;
  private boolean ballLeft = false;
@@ -40,10 +43,22 @@ public abstract class Game extends JFrame {
   return defUp;
  }
   public boolean OneKeyPressed(){
-    return shoot;
+    return shootLeft;
   }
-  public void BulletHit(){
-    shoot=false;
+    public boolean TwoKeyPressed(){
+        return shootRight;
+    }
+    public boolean ThreeKeyPressed(){
+        return shootUp;
+    }
+    public boolean FourKeyPressed(){
+        return shootDown;
+    }
+  public void bulletHit(){
+    shootLeft=false;
+      shootRight=false;
+      shootUp=false;
+      shootDown=false;
   }
  public boolean KKeyPressed() {
   return defDown;
@@ -204,7 +219,10 @@ public abstract class Game extends JFrame {
      case 'K' : defDown = true; break;
      case 'J' : defLeft = true; break;
      case 'L' : defRight = true; break;
-     case '1' : shoot = true; break;
+     case '1' : shootLeft = true; break;
+        case '2' : shootRight = true; break;
+        case '3' : shootUp = true; break;
+        case '4' : shootDown = true; break;
       case KeyEvent.VK_UP : changeColor = true; break;
 
   }

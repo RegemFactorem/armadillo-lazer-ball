@@ -4,7 +4,6 @@ public class Ball extends GameObject {
 
 private int xVelocity = 0;
 private int yVelocity = 0;
-private static int count = 0;
 
 
  /**
