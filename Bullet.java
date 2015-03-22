@@ -1,6 +1,13 @@
+import java.awt.*;
 
 public class Bullet extends Ball {
 
+    public void bulletCollision(Ball ball){
+
+        keepBulletWithBall(ball);
+        stopShooting();
+        setColor(Color.black);
+    }
     public void keepBulletWithBall(Ball ball)
     {
         setX(ball.getX());
