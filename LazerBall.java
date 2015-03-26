@@ -6,7 +6,6 @@ public class LazerBall extends Game {
     private Bullet bulletOne;
     private Defender defOneL;
     private Defender defOneR;
-//i am making a change in the earth
 
     //team two
     private Ball ballTwo;
