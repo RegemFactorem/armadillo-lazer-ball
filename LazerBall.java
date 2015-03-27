@@ -10,8 +10,8 @@ public class LazerBall extends Game {
     //team two
     private Ball ballTwo;
     private Bullet bulletTwo;
-    private Ball defTwoL;
-    private Ball defTwoR;
+    private Defender defTwoL;
+    private Defender defTwoR;
 
     //boundaries
     private Paddle wallL;
@@ -72,6 +72,21 @@ public class LazerBall extends Game {
         bulletTwo.setX(ballTwo.getX());
         bulletTwo.setY(ballTwo.getY());
 
+        //Defender 2 L characteristics
+        defTwoL = new Defender();
+        defTwoL.setSize(100,100);
+        defTwoL.setX(getFieldWidth()-40);
+        defTwoL.setY(getFieldHeight()/6);
+        defTwoL.setColor(Color.green);
+        add(defTwoL);
+
+        //Defender 1 R characteristics
+        defTwoR = new Defender();
+        defTwoR.setSize(100,100);
+        defTwoR.setX(getFieldWidth()-40);
+        defTwoR.setY(getFieldHeight()*2/3);
+        defTwoR.setColor(Color.green);
+        add(defTwoR);
         /*************
          * Boundaries*
          *************/
@@ -364,6 +379,23 @@ public class LazerBall extends Game {
         /***********************************************
          * Collisions between player controlled objects*
          ***********************************************/
+        //Bullet 1 & Defender 2 L collision and health lowering
+        if(bulletOne.collides(defTwoL) && bullet1InMotion)
+        {
+            bulletHit();
+            bullet1InMotion = false;
+            defTwoL.doDamage();
+            bulletTwo.bulletCollision(ballOne);
+        }
+        //Bullet 1 & Defender 2 R collision and health lowering
+        if(bulletOne.collides(defTwoR) && bullet1InMotion)
+        {
+            bulletHit();
+            bullet1InMotion = false;
+            defTwoR.doDamage();
+            bulletOne.bulletCollision(ballOne);
+        }
+
         //Bullet 2 & Defender 1 L collision and health lowering
         if(bulletTwo.collides(defOneL) && bullet2InMotion)
         {
