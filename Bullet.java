@@ -28,15 +28,5 @@ public class Bullet extends Ball {
         setXVelocity(-10);
         setYVelocity(0);
     }
-    public void shootUp()
-    {
-        setXVelocity(0);
-        setYVelocity(-10);
-    }
-    public void shootDown()
-    {
-        setXVelocity(0);
-        setYVelocity(10);
-    }
 
 }

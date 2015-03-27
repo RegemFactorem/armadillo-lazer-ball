@@ -19,7 +19,8 @@ public class LazerBall extends Game {
     private Paddle ceiling;
     private Paddle floor;
 
-    private boolean bulletInMotion = false;
+    private boolean bullet1InMotion = false;
+    private boolean bullet2InMotion = false;
 
     private int defenderScore = 0;
 
@@ -29,9 +30,10 @@ public class LazerBall extends Game {
          *********/
         //Ball 2 characteristics
         ballOne = new Ball();
-        ballOne.setSize(10,10);
-        ballOne.setX(getFieldWidth()/2-10);
-        ballOne.setY(getFieldHeight()/2);
+        ballOne.setSize(10, 10);
+        ballOne.setX(getFieldWidth() / 2 - 10);
+        ballOne.setY(getFieldHeight() / 2);
+        ballOne.setColor(Color.GREEN);
         add(ballOne);
 
         //Bullet 2 characteristics
@@ -62,7 +64,7 @@ public class LazerBall extends Game {
         ballTwo = new Ball();
         ballTwo.setSize(10,10);
         ballTwo.setX(getFieldWidth()/2+10);
-        ballTwo.setY(getFieldHeight()/2);
+        ballTwo.setY(getFieldHeight() / 2);
         add(ballTwo);
 
         //Bullet 2 characteristics
@@ -115,75 +117,98 @@ public class LazerBall extends Game {
             System.out.println("UP ARROW");
         }
 
-        //Controls for Defender 1 L: I,J,K,L
-        if(IKeyPressed())
-            defOneL.setYVelocity(-2);
-        if(KKeyPressed())
-            defOneL.setYVelocity(2);
-        if(JKeyPressed())
-            defOneL.setXVelocity(-2);
-        if(LKeyPressed())
-            defOneL.setXVelocity(2);
+        //Ball 1 movement with bullet not shot: I,J,K,L
+        if(WKeyPressed()&&!bullet1InMotion){
+            ballOne.setYVelocity(-5);
+            bulletOne.keepBulletWithBall(ballOne);
+        }
+        if(SKeyPressed()&&!bullet1InMotion){
+            ballOne.setYVelocity(5);
+            bulletOne.keepBulletWithBall(ballOne);
+        }
+        if (AKeyPressed()&&!bullet1InMotion){
+            ballOne.setXVelocity(-5);
+            bulletOne.keepBulletWithBall(ballOne);
+        }
+        if(DKeyPressed()&&!bullet1InMotion){
+            ballOne.setXVelocity(5);
+            bulletOne.keepBulletWithBall(ballOne);
+        }
 
-        //Shooting Bullet 2: 1,2,3,4
-        if(OneKeyPressed()){
+        //Ball 1 movement when bullet shot: I,J,K,L
+        if(WKeyPressed() && bullet1InMotion){
+            ballOne.setYVelocity(-5);
+        }
+        if(SKeyPressed()&& bullet1InMotion){
+            ballOne.setYVelocity(5);
+        }
+        if(AKeyPressed()&& bullet1InMotion){
+            ballOne.setXVelocity(-5);
+        }
+        if (DKeyPressed()&& bullet1InMotion){
+            ballOne.setXVelocity(5);
+        }
+
+        //Shooting Bullet 1: Q,E
+        if(QKeyPressed()){
+            bulletOne.setColor(Color.green);
+            bulletOne.setSize(20,5);
+            add(bulletOne);
+            bulletOne.shootLeft();
+            bullet1InMotion = true;
+        }
+        if(EKeyPressed()){
+            bulletOne.setColor(Color.green);
+            bulletOne.setSize(20,5);
+            add(bulletOne);
+            bulletOne.shootRight();
+            bullet1InMotion = true;
+        }
+        //Shooting Bullet 2: U,O
+        if(UKeyPressed()){
             bulletTwo.setColor(Color.green);
             bulletTwo.setSize(20,5);
             add(bulletTwo);
             bulletTwo.shootLeft();
-            bulletInMotion = true;
+            bullet2InMotion = true;
         }
-        if(TwoKeyPressed()){
+        if(OKeyPressed()){
             bulletTwo.setColor(Color.green);
             bulletTwo.setSize(20,5);
             add(bulletTwo);
             bulletTwo.shootRight();
-            bulletInMotion = true;
-        }
-        if(ThreeKeyPressed()){
-            bulletTwo.setColor(Color.green);
-            bulletTwo.setSize(5,20);
-            add(bulletTwo);
-            bulletTwo.shootUp();
-            bulletInMotion = true;
-        }
-        if(FourKeyPressed()){
-            bulletTwo.setColor(Color.green);
-            bulletTwo.setSize(5,20);
-            add(bulletTwo);
-            bulletTwo.shootDown();
-            bulletInMotion = true;
+            bullet2InMotion = true;
         }
 
         //Ball 2 movement with bullet not shot: W,A,S,D
-        if(WKeyPressed()&&!bulletInMotion){
+        if(IKeyPressed()&&!bullet2InMotion){
             ballTwo.setYVelocity(-5);
             bulletTwo.keepBulletWithBall(ballTwo);
         }
-        if(SKeyPressed()&&!bulletInMotion){
+        if(KKeyPressed()&&!bullet2InMotion){
             ballTwo.setYVelocity(5);
             bulletTwo.keepBulletWithBall(ballTwo);
         }
-        if(AKeyPressed()&&!bulletInMotion){
+        if(JKeyPressed()&&!bullet2InMotion){
             ballTwo.setXVelocity(-5);
             bulletTwo.keepBulletWithBall(ballTwo);
         }
-        if(DKeyPressed()&&!bulletInMotion){
+        if(LKeyPressed()&&!bullet1InMotion){
             ballTwo.setXVelocity(5);
             bulletTwo.keepBulletWithBall(ballTwo);
         }
 
         //Ball 2 movement when bullet shot: W,A,S,D
-        if(WKeyPressed() && bulletInMotion){
+        if(IKeyPressed() && bullet2InMotion){
             ballTwo.setYVelocity(-5);
         }
-        if(SKeyPressed()&& bulletInMotion){
+        if(KKeyPressed()&& bullet1InMotion){
             ballTwo.setYVelocity(5);
         }
-        if(AKeyPressed()&& bulletInMotion){
+        if(JKeyPressed()&& bullet2InMotion){
             ballTwo.setXVelocity(-5);
         }
-        if(DKeyPressed()&& bulletInMotion){
+        if(LKeyPressed()&& bullet2InMotion){
             ballTwo.setXVelocity(5);
         }
 
@@ -196,22 +221,22 @@ public class LazerBall extends Game {
         if(defOneL.collides(wallL))
         {
             defOneL.setX(40);
-            defOneL.setY(getFieldHeight()/6);
+            defOneL.setY(getFieldHeight() / 6);
         }
         if(defOneL.collides(wallR))
         {
             defOneL.setX(40);
-            defOneL.setY(getFieldHeight()/6);
+            defOneL.setY(getFieldHeight() / 6);
         }
         if(defOneL.collides(ceiling))
         {
             defOneL.setX(40);
-            defOneL.setY(getFieldHeight()/6);
+            defOneL.setY(getFieldHeight() / 6);
         }
         if(defOneL.collides(floor))
         {
             defOneL.setX(40);
-            defOneL.setY(getFieldHeight()/6);
+            defOneL.setY(getFieldHeight() / 6);
         }
 
         //Sets boundaries for Defender 1 R
@@ -223,18 +248,68 @@ public class LazerBall extends Game {
         if(defOneR.collides(wallR))
         {
             defOneR.setX(40);
-            defOneR.setY(getFieldHeight()/6);
+            defOneR.setY(getFieldHeight() / 6);
         }
         if(defOneR.collides(ceiling))
         {
             defOneR.setX(40);
-            defOneR.setY(getFieldHeight()/6);
+            defOneR.setY(getFieldHeight() / 6);
         }
         if(defOneR.collides(floor))
         {
             defOneR.setX(40);
-            defOneR.setY(getFieldHeight()/6);
+            defOneR.setY(getFieldHeight() / 6);
         }
+
+        //Sets boundiares for ball 1
+        if(ballOne.collides(wallL)){
+            ballOne.setX(5);
+        }
+        if(ballOne.collides(wallR)){
+            ballOne.setX(wallR.getX() - 10);
+        }
+        if(ballOne.collides(ceiling)){
+            ballOne.setY(5);
+        }
+        if(ballOne.collides(floor)){
+            ballOne.setY(floor.getY() - 10);
+        }
+
+        //Sets boundaries for bullet 1
+        if(bulletOne.collides(wallL)){
+            bulletHit();
+            bullet1InMotion = false;
+            bulletOne.setColor(Color.black);
+            bulletOne.keepBulletWithBall(ballOne);
+            bulletOne.stopShooting();
+
+
+        }
+        if(bulletOne.collides(wallR)){
+            bulletHit();
+            bullet1InMotion = false;
+            bulletOne.setColor(Color.black);
+            bulletOne.keepBulletWithBall(ballOne);
+            bulletOne.stopShooting();
+
+        }
+        if(bulletOne.collides(ceiling)){
+            bulletHit();
+            bullet1InMotion = false;
+            bulletOne.setColor(Color.black);
+            bulletOne.keepBulletWithBall(ballOne);
+            bulletOne.stopShooting();
+
+        }
+        if(bulletOne.collides(floor)){
+            bulletHit();
+            bullet1InMotion = false;
+            bulletOne.setColor(Color.black);
+            bulletOne.keepBulletWithBall(ballOne);
+            bulletOne.stopShooting();
+
+        }
+
 
         //Sets boundiares for ball 2
         if(ballTwo.collides(wallL)){
@@ -253,7 +328,7 @@ public class LazerBall extends Game {
         //Sets boundaries for bullet 2
         if(bulletTwo.collides(wallL)){
             bulletHit();
-            bulletInMotion = false;
+            bullet2InMotion = false;
             bulletTwo.setColor(Color.black);
             bulletTwo.keepBulletWithBall(ballTwo);
             bulletTwo.stopShooting();
@@ -262,7 +337,7 @@ public class LazerBall extends Game {
         }
         if(bulletTwo.collides(wallR)){
             bulletHit();
-            bulletInMotion = false;
+            bullet2InMotion = false;
             bulletTwo.setColor(Color.black);
             bulletTwo.keepBulletWithBall(ballTwo);
             bulletTwo.stopShooting();
@@ -270,7 +345,7 @@ public class LazerBall extends Game {
         }
         if(bulletTwo.collides(ceiling)){
             bulletHit();
-            bulletInMotion = false;
+            bullet2InMotion = false;
             bulletTwo.setColor(Color.black);
             bulletTwo.keepBulletWithBall(ballTwo);
             bulletTwo.stopShooting();
@@ -278,7 +353,7 @@ public class LazerBall extends Game {
         }
         if(bulletTwo.collides(floor)){
             bulletHit();
-            bulletInMotion = false;
+            bullet2InMotion = false;
             bulletTwo.setColor(Color.black);
             bulletTwo.keepBulletWithBall(ballTwo);
             bulletTwo.stopShooting();
@@ -290,18 +365,18 @@ public class LazerBall extends Game {
          * Collisions between player controlled objects*
          ***********************************************/
         //Bullet 2 & Defender 1 L collision and health lowering
-        if(bulletTwo.collides(defOneL) && bulletInMotion)
+        if(bulletTwo.collides(defOneL) && bullet2InMotion)
         {
             bulletHit();
-            bulletInMotion = false;
+            bullet2InMotion = false;
             defOneL.doDamage();
             bulletTwo.bulletCollision(ballTwo);
         }
         //Bullet 2 & Defender 1 R collision and health lowering
-        if(bulletTwo.collides(defOneR) && bulletInMotion)
+        if(bulletTwo.collides(defOneR) && bullet2InMotion)
         {
             bulletHit();
-            bulletInMotion = false;
+            bullet2InMotion = false;
             defOneR.doDamage();
             bulletTwo.bulletCollision(ballTwo);
         }

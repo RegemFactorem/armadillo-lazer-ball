@@ -22,10 +22,10 @@ public abstract class Game extends JFrame {
     private ArrayList _ObjectList = new ArrayList();
     private Timer _t;
 
-    private boolean shootLeft = false;
-    private boolean shootRight = false;
-    private boolean shootUp = false;
-    private boolean shootDown = false;
+    private boolean shootLeftL = false;
+    private boolean shootRightL = false;
+    private boolean shootLeftR = false;
+    private boolean shootRightR = false;
     private boolean ballUp = false;
     private boolean ballDown = false;
     private boolean ballLeft = false;
@@ -42,23 +42,23 @@ public abstract class Game extends JFrame {
     public boolean IKeyPressed() {
         return defUp;
     }
-    public boolean OneKeyPressed(){
-        return shootLeft;
+    public boolean QKeyPressed(){
+        return shootLeftL;
     }
-    public boolean TwoKeyPressed(){
-        return shootRight;
+    public boolean EKeyPressed(){
+        return shootRightL;
     }
-    public boolean ThreeKeyPressed(){
-        return shootUp;
+    public boolean UKeyPressed(){
+        return shootLeftR;
     }
-    public boolean FourKeyPressed(){
-        return shootDown;
+    public boolean OKeyPressed(){
+        return shootRightR;
     }
     public void bulletHit(){
-        shootLeft=false;
-        shootRight=false;
-        shootUp=false;
-        shootDown=false;
+        shootLeftL=false;
+        shootRightL=false;
+        shootLeftR=false;
+        shootRightR=false;
     }
     public boolean KKeyPressed() {
         return defDown;
@@ -219,10 +219,10 @@ public abstract class Game extends JFrame {
                     case 'K' : defDown = true; break;
                     case 'J' : defLeft = true; break;
                     case 'L' : defRight = true; break;
-                    case '1' : shootLeft = true; break;
-                    case '2' : shootRight = true; break;
-                    case '3' : shootUp = true; break;
-                    case '4' : shootDown = true; break;
+                    case 'Q' : shootLeftL = true; break;
+                    case 'E' : shootRightL = true; break;
+                    case 'U' : shootLeftR = true; break;
+                    case 'O' : shootRightR = true; break;
                     case KeyEvent.VK_UP : changeColor = true; break;
 
                 }
