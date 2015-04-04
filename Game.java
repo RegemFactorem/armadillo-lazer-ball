@@ -174,7 +174,7 @@ public abstract class Game extends JFrame {
         getContentPane().setLayout(null);
         JMenuBar menuBar = new JMenuBar();
         JMenu menuFile = new JMenu("File");
-        JMenuItem menuFileExit = new JMenuItem("Leave this B");
+        JMenuItem menuFileExit = new JMenuItem("Exit");
         menuBar.add(menuFile);
         menuFile.add(menuFileExit);
         setJMenuBar(menuBar);
